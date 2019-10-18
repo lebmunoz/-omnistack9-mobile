@@ -12,7 +12,7 @@ function SpotList({ tech, navigation }) {
   useEffect(() => {
     async function loadSpots() {
       const response = await api.get('/spots', {
-        params: { techs }
+        params: { tech }
       })
 
       setSpots(response.data);
