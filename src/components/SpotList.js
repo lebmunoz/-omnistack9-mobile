@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { withNavigation } from 'react-navigation';
-import { Text, View, StyleSheet, FlatList } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 
 import api from '../services/api'
-import { stopLocationUpdatesAsync } from 'expo-location';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function SpotList({ tech, navigation }) {
   const [spots, setSpots] = useState([]);
@@ -31,13 +29,14 @@ function SpotList({ tech, navigation }) {
       <FlatList
         style={styles.list}
         data={spots}
-        keyExtractor={spot => spot.id}
+        keyExtractor={spot => spot._id}
+        horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
-          <View style={stopLocationUpdatesAsync.listItem}>
+          <View style={styles.listItem}>
             <Image style={styles.thumbnail} source={{ uri: item.thumbnail_url }} />
             <Text style={styles.company}>{item.company}</Text>
-            <Text style={styles.price}>[item.price ? `R$${item.price}/dia` : 'GRATUITO'</Text>
+            <Text style={styles.price}>{item.price ? `R$${item.price}/dia` : 'GRATUITO'}</Text>
             <TouchableOpacity onPress={() => handleNavigate(item.id)} style={styles.button}>
               <Text style={styles.buttonText}>Solicitar Reserva</Text>
             </TouchableOpacity>
